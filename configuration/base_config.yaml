@@ -1,0 +1,8 @@
+hydra:
+  run:
+    dir: ./outputs/res_${now:%Y-%m-%d_%H-%M-%S}/
+  job_logging:
+   root:
+    level: CRITICAL
+model:
+ n_classes: 2

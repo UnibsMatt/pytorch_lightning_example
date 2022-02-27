@@ -1,0 +1,69 @@
+repos:
+  - repo: https://github.com/myint/autoflake
+    rev: v1.4
+    hooks:
+      - id: autoflake
+        name: Remove unused variables and imports
+        language: python
+        entry: autoflake
+        types: [python]
+        args:
+          [
+            "--in-place",
+            "--remove-all-unused-imports",
+            "--remove-unused-variables",
+            "--expand-star-imports",
+            "--ignore-init-module-imports",
+          ]
+        files: \.py$
+        exclude: tlnext/callbacks/mlflow.py
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        name: Sorting import statements
+        language: python
+        types: [python]
+        args: [
+            "--filter-files",
+            "--profile", "black",
+            "--line-length=120",
+        ]
+        files: \.py$
+  - repo: https://github.com/psf/black
+    rev: 21.12b0
+    hooks:
+      - id: black
+        language: python
+        types: [python]
+        args: [
+            "-l 120",
+            "--experimental-string-processing",
+        ]
+  - repo: https://github.com/econchick/interrogate
+    rev: 1.5.0
+    hooks:
+      - id: interrogate
+        language: python
+        types: [python]
+        args:
+          [
+            "-vv",
+            "-i",
+            "-I",
+            "-M",
+            "-m",
+            "-r=*forward\\(*",
+            "-r=*optimizer_step\\(*",
+            "-r=*training_step\\(*",
+            "-r=*validation_step\\(*",
+            "-r=*training_step_end\\(*",
+            "-r=*validation_step_end\\(*",
+            "-r=*test_step\\(*",
+            "-r=*on_*\\(*",
+            "-r=*test_*\\(*",
+            "-r=*apply*",
+            "-r=*training_epoch_end\\(*",
+            "-r=*validation_epoch_end\\(*",
+            "--fail-under=60",
+          ]
